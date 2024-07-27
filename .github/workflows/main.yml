@@ -1,4 +1,4 @@
-name: Build Images
+name: Build Meshcentral Unraid Image
 
 on: 
   schedule:
@@ -22,12 +22,10 @@ jobs:
           version: latest
       - name: login to dockerhub
         run: echo "${{ secrets.DOCKERHUB_KEY }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
-      - name: login to github
-        run: echo "${{ secrets.GHCR_KEY }}" | docker login ghcr.io -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
       - name: build unraid images
         run: |
           docker buildx build --build-arg PREINSTALL_LIBS=false --push \
             --tag richy1989/meshcentral:latest \
             --tag richy1989/meshcentral:$(npm show meshcentral version) \
             --platform linux/amd64, ./builds/unraid/
-      
+      - uses: ./
