@@ -34,6 +34,5 @@ EXPOSE 80 443
 #volumes
 VOLUME /opt/meshcentral/meshcentral-data
 VOLUME /opt/meshcentral/meshcentral-files
-VOLUME /opt/meshcentral/meshcentral-backups
 
 CMD ["bash","/opt/meshcentral/startup.sh"]

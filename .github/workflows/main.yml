@@ -1,30 +1,28 @@
-name: Build Meshcentral Unraid Image
+on:
+  push:
 
-on: 
-  schedule:
-  - cron: "0 16 * * 6"
-  workflow_dispatch:
-  
 jobs:
-  build:
+  docker:
     runs-on: ubuntu-latest
     steps:
-      - name: checout code
-        uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-      - name: install buildx
-        id: buildx
-        uses: crazy-max/ghaction-docker-buildx@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          version: latest
-      - name: login to dockerhub
-        run: echo "${{ secrets.DOCKERHUB_KEY }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
-      - name: build unraid images
-        run: |
-          docker buildx build --build-arg UID=99 --build-arg GID=100 --build-arg PREINSTALL_LIBS=false --push \
-            --tag richy1989/meshcentral:latest \
-            --tag richy1989/meshcentral:$(npm show meshcentral version) \
-            --platform linux/amd64 ./builds/unraid/
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_KEY }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: "{{defaultContext}}:builds/unraid/"
+          push: true
+          build-args: UID=99, GID=100, PREINSTALL_LIBS=false
+          platforms: linux/amd64
+          tags: richy1989/meshcentral:latest, richy1989/meshcentral:$(npm show meshcentral version)
