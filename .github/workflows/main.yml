@@ -1,3 +1,5 @@
+name: Build Meshcentral Unraid Image
+
 on:
   push:
 
@@ -25,4 +27,4 @@ jobs:
           push: true
           build-args: UID=99, GID=100, PREINSTALL_LIBS=false
           platforms: linux/amd64
-          tags: richy1989/meshcentral:latest, richy1989/meshcentral:$(npm show meshcentral version)
+          tags: richy1989/meshcentral:latest
