@@ -24,8 +24,7 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_KEY }}" | docker login -u "${{ secrets.DOCKERHUB_USER }}" --password-stdin
       - name: build unraid images
         run: |
-          docker buildx build --build-arg PREINSTALL_LIBS=false --push \
+          docker buildx build --build-arg UID=99 --build-arg GID=100 --build-arg PREINSTALL_LIBS=false --push \
             --tag richy1989/meshcentral:latest \
             --tag richy1989/meshcentral:$(npm show meshcentral version) \
-            --platform linux/amd64, ./builds/unraid/
-      - uses: ./
+            --platform linux/amd64 .
