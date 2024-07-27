@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64
           tags: |
             richy1989/meshcentral:latest
-            echo "richy1989/meshcentral:$Mesh_V"
+            richy1989/meshcentral:${{ Mesh_V }}
