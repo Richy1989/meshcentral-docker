@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  Mesh_V: Monday
+  Mesh_V: 1.1.27
 
 jobs:
   docker:
@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 20.x
       - run: Mesh_V:$(npm show meshcentral version)
+      - run: echo "Mesh_V=$(npm show meshcentral version) >> $GITHUB_ENV
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -34,4 +35,4 @@ jobs:
             GID=100
             PREINSTALL_LIBS=false
           platforms: linux/amd64
-          tags: richy1989/meshcentral:latest #, richy1989/meshcentral:$(npm show meshcentral version)
+          tags: richy1989/meshcentral:latest, richy1989/meshcentral:$Mesh_V
