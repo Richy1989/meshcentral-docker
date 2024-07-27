@@ -21,7 +21,7 @@ NOTE: That this image uses MongoDB. Hence an wokring MongoDB on Unraid is needed
 Download the App from the Unraid App store. Set all the environment variables.
 This will create a basic config.json file in the DATA folder. For more specific configuration continue in this file, but make sure the FORCE_CREATE_CONFIG environmenrt variable is set to false!
 
-NOTE: That this image uses the MongoDB. Hence an wokring MongoDB on Unraid is needed. 
+NOTE: That this image uses the MongoDB. Hence a wokring MongoDB on Unraid is needed. 
 
 ## Tags
 
