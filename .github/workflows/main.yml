@@ -34,4 +34,6 @@ jobs:
             GID=100
             PREINSTALL_LIBS=false
           platforms: linux/amd64
-          tags: richy1989/meshcentral:latest, richy1989/meshcentral:$Mesh_V
+          tags: |
+            richy1989/meshcentral:latest
+            echo "richy1989/meshcentral:$Mesh_V"
