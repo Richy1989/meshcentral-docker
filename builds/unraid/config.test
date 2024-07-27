@@ -10,16 +10,12 @@
     "redirPort": 80,
     "_redirAliasPort": 80,
     "AgentPong": 300,
-    "TLSOffload": false,
+    "TLSOffload": "192.168.0.246",
     "SelfUpdate": false,
     "AllowFraming": false,
-    "WebRTC": false,
-    "AutoBackup": {
-      "backupPath": "/opt/meshcentral/meshcentral-backups",
-      "backupInvervalHours": 24,
-      "keepLastDaysBackup": 10,
-      "zippassword": "MyReallySecretPassword3"
-    }
+    "mongodb": "mongodb://192.168.0.246:27017/mesh",
+    "mongodbcol": "meshcentral",
+    "WebRTC": true,
   },
   "domains": {
         "": {

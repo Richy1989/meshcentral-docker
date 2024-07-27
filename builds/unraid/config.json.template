@@ -14,8 +14,11 @@
     "SelfUpdate": false,
     "AllowFraming": false,
     "mongodb": "mongodb://mongodb:27017/mesh",
-    "mongodbcol": "mesh",
-    "WebRTC": false
+    "mongodbcol": "meshcentral",
+    "WebRTC": false,
+    "browserPong": 30,
+    "agentPong": 30,
+    "agentPing":30
   },
   "domains": {
         "": {
