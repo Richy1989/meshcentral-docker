@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64
           tags: |
             richy1989/meshcentral:latest
-            richy1989/meshcentral:${{ Mesh_V }}
+            richy1989/meshcentral:${{ env.Mesh_V }}
