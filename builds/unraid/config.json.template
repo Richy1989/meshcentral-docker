@@ -9,7 +9,6 @@
     "_aliasPort": 443,
     "redirPort": 80,
     "_redirAliasPort": 80,
-    "AgentPong": 300,
     "TLSOffload": false,
     "SelfUpdate": false,
     "AllowFraming": false,
