@@ -3,7 +3,7 @@
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/richy1989/meshcentral?style=flat-square)
 
 ## About
-First of all my biggest thank you to ![Meshcentral Docker](https://github.com/Typhonragewind/meshcentral-docker) for the base code I used to create this version of Meshcentral optimized for Unraid.
+First of all my biggest thank you to (https://github.com/Typhonragewind/meshcentral-docker) for the base code I used to create this version of Meshcentral optimized for Unraid.
 
 While easier to setup and get up and running, you should still peer through the very informative official guides:
 
@@ -19,9 +19,13 @@ NOTE: That this image uses MongoDB. Hence an wokring MongoDB on Unraid is needed
 ## Installation
 
 Download the App from the Unraid App store. Set all the environment variables.
-This will create a basic config.json file in the DATA folder. For more specific configuration continue in this file, but make sure the FORCE_CREATE_CONFIG environmenrt variable is set to false!
+This will create a basic config.json file in the DATA folder. For more specific configuration continue in this file, but make sure the FORCE_CREATE_CONFIG environment variable is set to false!
 
-NOTE: That this image uses the MongoDB. Hence a wokring MongoDB on Unraid is needed. 
+NOTE: That this image uses the MongoDB. Hence a working MongoDB on Unraid is needed. 
+
+## Building
+You may build everything yourself, there is a build script, just update with your dockerhub name. 
+Note: The right UID and PID for Unraid is set in the build process as build-args.
 
 ## Tags
 
