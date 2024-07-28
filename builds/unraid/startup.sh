@@ -23,10 +23,17 @@ create_config_start() {
         sed -i "s/\"WebRTC\": false/\"WebRTC\": $WEBRTC/" meshcentral-data/config.json
         sed -i "s/\"AllowFraming\": false/\"AllowFraming\": $IFRAME/" meshcentral-data/config.json
         sed -i "s|\"mongodb\": \"mongodb://mongodb:27017/mesh\"|\"mongodb\": \"$MONGODB_URI\"|" meshcentral-data/config.json
-        sed -i "s/\"_title\": \"MyServer\"/\"_title\": \"$TITLE\"/" meshcentral-data/config.json
-        sed -i "s/\"_title2\": \"Servername\"/\"_title2\": \"$SERVERNAME\"/" meshcentral-data/config.json
+        
+        if [[ -n "${TITLE}" ]]; then
+            sed -i "s/\"_title\": \"MyServer\"/\"title\": \"$TITLE\"/" meshcentral-data/config.json
+        fi
+
+        if [[ -n "${SERVERNAME}" ]]; then
+            sed -i "s/\"_title2\": \"Servername\"/\"title2\": \"$SERVERNAME\"/" meshcentral-data/config.json
+        fi
+        
         if [ -z "$SESSION_KEY" ]; then
-        SESSION_KEY="$(cat /dev/urandom | tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1)"
+            SESSION_KEY="$(cat /dev/urandom | tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1)"
         fi
         sed -i "s/\"_sessionKey\": \"MyReallySecretPassword1\"/\"sessionKey\": \"$SESSION_KEY\"/" meshcentral-data/config.json
         if [ "$REVERSE_PROXY" != false ]
@@ -36,13 +43,13 @@ create_config_start() {
                 node node_modules/meshcentral
                 exit
         fi
-        node node_modules/meshcentral --cert "$HOSTNAME" 
+        node node_modules/meshcentral --cert "$HOSTNAME"
 }
 
 if [ "$FORCE_CREATE_CONFIG" = false ]; then
     if [ -f "meshcentral-data/config.json" ]
         then
-            node node_modules/meshcentral 
+            node node_modules/meshcentral
         else
             create_config_start
     fi
