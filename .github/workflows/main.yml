@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./docker_unraid
+          context: docker_unraid
           push: true
           build-args: |
             UID=99
