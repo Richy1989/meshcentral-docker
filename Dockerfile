@@ -1,6 +1,8 @@
 FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
 
 RUN mkdir -p /opt/meshcentral/meshcentral
+
+#Copy MeshCentral into the build, we get this by checking it out of the official repo, this happens in the GitAction
 COPY ./mesh /opt/meshcentral/meshcentral/
 
 WORKDIR /opt/meshcentral

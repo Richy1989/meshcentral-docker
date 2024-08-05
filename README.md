@@ -18,7 +18,7 @@ This image is targeted for self-hosting in an Unraid Environment.
 **NOTE:** That this image uses MongoDB. The Database can be configured with a Database URL and User / Password. 
 If you however choose to not use the MongoDB set the USE_MONGODB environment variabel to false, in this case MeshCentral will use an internal database. 
 
-**NOTE:**All Sources are pulled directrly from the Meshcentral Repo. (See the GitHub Action File)
+**NOTE:** All Sources are pulled directrly from the Meshcentral Repo. (See the GitHub Action File)
 I only updated the dockerfile to be more accommodating for an Unraid build.
 
 ## Installation
