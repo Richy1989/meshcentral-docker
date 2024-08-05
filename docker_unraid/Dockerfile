@@ -1,7 +1,8 @@
 FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
 
 RUN mkdir -p /opt/meshcentral/meshcentral
-COPY ./MeshCentral/MeshCentral/ /opt/meshcentral/meshcentral/
+COPY ./ /opt/meshcentral/meshcentral/
+RUN ls /opt/meshcentral/meshcentral/
 WORKDIR /opt/meshcentral
 
 ARG DISABLE_MINIFY=""
