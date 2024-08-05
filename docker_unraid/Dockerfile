@@ -1,8 +1,7 @@
 FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
 
-ARG GITHUB_WORKSPACE
 RUN mkdir -p /opt/meshcentral/meshcentral
-COPY MeshCentral /opt/meshcentral/meshcentral/
+COPY ../MeshCentral /opt/meshcentral/meshcentral/
 
 WORKDIR /opt/meshcentral
 
