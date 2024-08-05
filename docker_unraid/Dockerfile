@@ -1,7 +1,8 @@
 FROM --platform=$BUILDPLATFORM node:20-alpine AS builder
 
+ARG GITHUB_WORKSPACE
 RUN mkdir -p /opt/meshcentral/meshcentral
-COPY ./ /opt/meshcentral/meshcentral/
+COPY "$GITHUB_WORKSPACE"/MeshCentral /opt/meshcentral/meshcentral/
 
 WORKDIR /opt/meshcentral
 
@@ -16,8 +17,6 @@ RUN if ! [ -z "$DISABLE_TRANSLATE" ] && [ "$DISABLE_TRANSLATE" != "yes" ] && [ "
     && [ "$DISABLE_TRANSLATE" != "true" ] && [ "$DISABLE_TRANSLATE" != "TRUE" ]; then \
     echo -e "\e[0;31;49mInvalid value for build argument DISABLE_TRANSLATE, possible values: yes/true\e[;0m"; exit 1; \
     fi
-
-RUN echo $(ls ./ -lah)
 
 # install translate/minify modules if need too
 RUN if [ -z "$DISABLE_MINIFY" ] || [ -z "$DISABLE_TRANSLATE" ]; then cd meshcentral && npm install html-minifier jsdom minify-js; fi

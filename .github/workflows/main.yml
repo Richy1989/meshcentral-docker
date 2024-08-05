@@ -41,6 +41,7 @@ jobs:
             GID=100
             PREINSTALL_LIBS=false
             INCLUDE_MONGODBTOOLS="yes"
+            GITHUB_WORKSPACE=${{ env.GITHUB_WORKSPACE }}
           platforms: linux/amd64
           tags: |
             richy1989/meshcentral-dev:latest
