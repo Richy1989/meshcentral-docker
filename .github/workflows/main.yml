@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: "{{defaultContext}}"
           push: true
           build-args: |
             UID=99
