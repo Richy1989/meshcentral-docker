@@ -27,11 +27,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
-      - run: echo "Mesh_V=$(npm show meshcentral version)" >> $GITHUB_ENV
       - run: echo "APP_VERSION=$(grep -o '"version":\s*"[^"]*"' ./mesh/package.json | cut -f4- -d\" | tr -d '"')" >> $GITHUB_ENV
       - run: echo $APP_VERSION
-      - run: echo $(ls)
-      - run: echo $(ls ./mesh/)
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:

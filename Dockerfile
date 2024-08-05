@@ -36,7 +36,6 @@ RUN rm -rf /opt/meshcentral/meshcentral/docker
 RUN rm -rf /opt/meshcentral/meshcentral/node_modules
 
 #FROM --platform=$TARGETPLATFORM alpine:3.19
-#FROM alpine:3.19
 FROM node:lts-slim
 
 #RUN apk update \
