@@ -17,33 +17,34 @@ export MONGODB_URI
 export FORCE_CREATE_CONFIG
 
 create_config_start() {
-        cp config.json.template meshcentral-data/config.json
-        sed -i "s/\"cert\": \"myserver.mydomain.com\"/\"cert\": \"$HOSTNAME\"/" meshcentral-data/config.json
-        sed -i "s/\"NewAccounts\": true/\"NewAccounts\": $ALLOW_NEW_ACCOUNTS/" meshcentral-data/config.json
-        sed -i "s/\"WebRTC\": false/\"WebRTC\": $WEBRTC/" meshcentral-data/config.json
-        sed -i "s/\"AllowFraming\": false/\"AllowFraming\": $IFRAME/" meshcentral-data/config.json
-        sed -i "s|\"mongodb\": \"mongodb://mongodb:27017/mesh\"|\"mongodb\": \"$MONGODB_URI\"|" meshcentral-data/config.json
-        
-        if [[ -n "${TITLE}" ]]; then
-            sed -i "s/\"_title\": \"MyServer\"/\"title\": \"$TITLE\"/" meshcentral-data/config.json
-        fi
+    cp config.json.template meshcentral-data/config.json
+    sed -i "s/\"cert\": \"myserver.mydomain.com\"/\"cert\": \"$HOSTNAME\"/" meshcentral-data/config.json
+    sed -i "s/\"NewAccounts\": true/\"NewAccounts\": $ALLOW_NEW_ACCOUNTS/" meshcentral-data/config.json
+    sed -i "s/\"WebRTC\": false/\"WebRTC\": $WEBRTC/" meshcentral-data/config.json
+    sed -i "s/\"AllowFraming\": false/\"AllowFraming\": $IFRAME/" meshcentral-data/config.json
+    sed -i "s|\"mongodb\": \"mongodb://mongodb:27017/mesh\"|\"mongodb\": \"$MONGODB_URI\"|" meshcentral-data/config.json
+    
+    if [[ -n "${TITLE}" ]]; then
+        sed -i "s/\"_title\": \"MyServer\"/\"title\": \"$TITLE\"/" meshcentral-data/config.json
+    fi
 
-        if [[ -n "${SERVERNAME}" ]]; then
-            sed -i "s/\"_title2\": \"Servername\"/\"title2\": \"$SERVERNAME\"/" meshcentral-data/config.json
-        fi
-        
-        if [ -z "$SESSION_KEY" ]; then
-            SESSION_KEY="$(cat /dev/urandom | tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1)"
-        fi
-        sed -i "s/\"_sessionKey\": \"MyReallySecretPassword1\"/\"sessionKey\": \"$SESSION_KEY\"/" meshcentral-data/config.json
-        if [ "$REVERSE_PROXY" != false ]
-            then 
-                sed -i "s/\"_certUrl\": \"my\.reverse\.proxy\"/\"certUrl\": \"https:\/\/$REVERSE_PROXY:$REVERSE_PROXY_TLS_PORT\"/" meshcentral-data/config.json
-                sed -i "s/\"TLSOffload\": false/\"TLSOffload\": \"$REVERSE_PROXY\"/" meshcentral-data/config.json
-                node node_modules/meshcentral
-                exit
-        fi
-        node node_modules/meshcentral --cert "$HOSTNAME"
+    if [[ -n "${SERVERNAME}" ]]; then
+        sed -i "s/\"_title2\": \"Servername\"/\"title2\": \"$SERVERNAME\"/" meshcentral-data/config.json
+    fi
+    
+    if [ -z "$SESSION_KEY" ]; then
+        SESSION_KEY="$(cat /dev/urandom | tr -dc 'A-Za-z0-9' | fold -w 32 | head -n 1)"
+    fi
+    sed -i "s/\"_sessionKey\": \"MyReallySecretPassword1\"/\"sessionKey\": \"$SESSION_KEY\"/" meshcentral-data/config.json
+    
+    if [ "$REVERSE_PROXY" != false ]
+        then 
+            sed -i "s/\"_certUrl\": \"my\.reverse\.proxy\"/\"certUrl\": \"https:\/\/$REVERSE_PROXY:$REVERSE_PROXY_TLS_PORT\"/" meshcentral-data/config.json
+            sed -i "s/\"TLSOffload\": false/\"TLSOffload\": \"$REVERSE_PROXY\"/" meshcentral-data/config.json
+            node node_modules/meshcentral
+            exit
+    fi
+    node node_modules/meshcentral --cert "$HOSTNAME"
 }
 
 if [ "$FORCE_CREATE_CONFIG" = false ]; then

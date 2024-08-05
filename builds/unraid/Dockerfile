@@ -31,7 +31,7 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then npm
 COPY --chown=node:node config.json.template /opt/meshcentral/config.json.template
 COPY --chown=node:node startup.sh startup.sh
 
-EXPOSE 80 443
+EXPOSE 80 443 4433
 
 #volumes
 VOLUME /opt/meshcentral/meshcentral-data
