@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.GITHUB_WORKSPACE }}/docker_unraid
+          context: .
           push: true
           build-args: |
             UID=99
