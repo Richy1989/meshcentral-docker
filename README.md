@@ -4,6 +4,7 @@
 
 ## About
 First of all my biggest thank you to (https://github.com/Typhonragewind/meshcentral-docker) for the base code I used to create this version of Meshcentral optimized for Unraid.
+The Idea with getting the sources directly is from the MeshCentral Docker build on the MeshCentral repo: (https://github.com/Ylianst/MeshCentral)
 
 While easier to setup and get up and running, you should still peer through the very informative official guides:
 
@@ -15,6 +16,9 @@ https://meshcentral.com/info/docs/MeshCentral2UserGuide.pdf
 
 This image is targeted for self-hosting in an Unraid Environment.
 NOTE: That this image uses MongoDB. Hence an wokring MongoDB on Unraid is needed. 
+
+All Sources are pulled directrly from the Meshcentral Repo. (See the GitHub Action File)
+I only updated the dockerfile to be more accommodating for an Unraid build.
 
 ## Installation
 
@@ -36,4 +40,5 @@ These tags are available in Dockerhub
 Be sure to check out MeshCentral's github repo. The project is amazing and the developers too!
 
 ## Changelog
+2024-08-05 - Get Sources directly from MeshCentral GitHub
 2024-07-27 - Initial version
