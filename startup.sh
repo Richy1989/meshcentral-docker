@@ -1,9 +1,11 @@
 #!/bin/bash
 
-if [ -f "meshcentral-data/${CONFIG_FILE}" ]; then
+if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
     node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
 else
+    rm -f meshcentral-data/"${CONFIG_FILE}"
     cp config.json.template meshcentral-data/"${CONFIG_FILE}"
+    
     if [ -n "$USE_MONGODB" ] && [ "$USE_MONGODB" == "true" ]; then
         if [ -z "$MONGO_URL" ]; then
             prefix=""

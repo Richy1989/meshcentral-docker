@@ -54,6 +54,7 @@ RUN mkdir -p /opt/meshcentral/meshcentral
 # copy files from builder-image
 COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
 
+# Set GID and UID to the once set in Build Arguments.
 RUN chown node:node -R /opt/meshcentral/
 
 #Switch to user node
@@ -71,6 +72,7 @@ ENV CONFIG_FILE="config.json"
 
 # environment variables for initial configuration file
 ENV USE_MONGODB="false"
+ENV FORCE_CREATE_CONFIG="false"
 ENV MONGO_INITDB_ROOT_USERNAME="root"
 ENV MONGO_INITDB_ROOT_PASSWORD="pass"
 ENV MONGO_URL=""
@@ -93,6 +95,7 @@ RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ] && [ "$INCLUDE_MONGODBTOOLS" != "yes" ] 
 
 # RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
+# Coppy needed files
 COPY --chown=node:node ./startup.sh ./startup.sh 
 COPY --chown=node:node ./config.json.template /opt/meshcentral/config.json.template
 
