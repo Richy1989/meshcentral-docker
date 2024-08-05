@@ -92,8 +92,8 @@ RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ] && [ "$INCLUDE_MONGODBTOOLS" != "yes" ] 
 
 # RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
-COPY --chown=node:node ./docker/startup.sh ./startup.sh 
-COPY --chown=node:node ./docker/config.json.template /opt/meshcentral/config.json.template
+COPY --chown=node:node ./startup.sh ./startup.sh 
+COPY --chown=node:node ./config.json.template /opt/meshcentral/config.json.template
 
 # install dependencies from package.json and nedb
 RUN cd meshcentral && npm install && npm install nedb
