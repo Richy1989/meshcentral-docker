@@ -16,7 +16,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Checkout
+      - name: Checkout Local Repo
         uses: actions/checkout@v4
       - name: Checkout Meshcentral Repo
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: "./docker_unraid/"
+          context: "{{defaultContext}}/docker_unraid/"
           push: true
           build-args: |
             UID=99
