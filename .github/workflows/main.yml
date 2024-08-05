@@ -28,6 +28,8 @@ jobs:
         with:
           node-version: 20.x
       - run: echo "Mesh_V=$(npm show meshcentral version)" >> $GITHUB_ENV
+      - run: echo "APP_VERSION=$(grep -o '"version":\s*"[^"]*"' ./mesh/package.json | cut -f4- -d\" | tr -d '"');" >> $GITHUB_ENV
+      - run: echo $APP_VERSION
       - run: echo $(ls)
       - run: echo $(ls ./mesh/)
       - name: Login to Docker Hub
@@ -48,4 +50,4 @@ jobs:
           platforms: linux/amd64
           tags: |
             richy1989/meshcentral-dev:latest
-            richy1989/meshcentral-dev:${{ env.Mesh_V }}
+            richy1989/meshcentral-dev:${{ env.APP_VERSION }}
