@@ -22,7 +22,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Ylianst/MeshCentral
-          path: MeshCentral
       - name: Setup node and get Meshcentral version
         uses: actions/setup-node@v4
         with:
