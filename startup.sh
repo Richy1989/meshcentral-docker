@@ -1,22 +1,6 @@
 #!/bin/bash
 
-
-run_mesh()
-{
-    #chown node:node -R /opt/meshcentral
-    #run as node user
-    if [ $1 ]; then
-        su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${2}" node
-    else
-        su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" --cert "$HOSTNAME" ${2}" node
-    fi
-    
-    # su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${ARGS}" node
-    # su -c "$1" node
-}
-
 if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
-    #run_mesh true ${ARGS}
     node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
 else
     rm -f meshcentral-data/"${CONFIG_FILE}"
@@ -46,9 +30,8 @@ else
     sed -i "s/\"_sessionKey\": \"MyReallySecretPassword1\"/\"sessionKey\": \"$SESSION_KEY\"/" meshcentral-data/"${CONFIG_FILE}"
     if [ "$REVERSE_PROXY" != "false" ]; then
         sed -i "s/\"_certUrl\": \"my\.reverse\.proxy\"/\"certUrl\": \"https:\/\/$REVERSE_PROXY:$REVERSE_PROXY_TLS_PORT\"/" meshcentral-data/"${CONFIG_FILE}"
-        run_mesh true ${ARGS}
+        node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
         exit
     fi
-    #node meshcentral/meshcentral --configfile "${CONFIG_FILE}" --cert "$HOSTNAME" ${ARGS}
-    run_mesh false ${ARGS}
+    node meshcentral/meshcentral --configfile "${CONFIG_FILE}" --cert "$HOSTNAME" ${ARGS}
 fi
