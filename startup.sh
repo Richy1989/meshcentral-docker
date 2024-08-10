@@ -3,11 +3,14 @@
 
 run_mesh()
 {
+    chown node:node -R /opt/meshcentral
+    #run as node user
     if [ $1 ]; then
         su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${2}" node
-        exit
+    else
+        su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" --cert "$HOSTNAME" ${2}" node
     fi
-    su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" --cert "$HOSTNAME" ${2}" node
+    
     # su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${ARGS}" node
     # su -c "$1" node
 }
