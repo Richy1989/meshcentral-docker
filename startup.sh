@@ -4,6 +4,7 @@
 run_mesh()
 {
     chown node:node -R /opt/meshcentral
+    chown node:node -R /root/.npm
     #run as node user
     if [ $1 ]; then
         su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${2}" node
