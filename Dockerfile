@@ -56,9 +56,6 @@ RUN mkdir -p /opt/meshcentral/meshcentral
 # copy files from builder-image
 COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
 
-# Set GID and UID to the once set in Build Arguments.
-RUN chown node:node -R /opt/meshcentral/
-
 # meshcentral installation
 WORKDIR /opt/meshcentral
 
@@ -89,6 +86,15 @@ ENV ARGS=""
 
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
+# volumes
+VOLUME /opt/meshcentral/meshcentral-data
+VOLUME /opt/meshcentral/meshcentral-files
+VOLUME /opt/meshcentral/meshcentral-web
+VOLUME /opt/meshcentral/meshcentral-backups
+
+# Set GID and UID to the once set in Build Arguments.
+RUN chown node:node -R /opt/meshcentral/
+
 #Switch to user node
 USER node
 
@@ -104,12 +110,6 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 RUN cd meshcentral && npm install && npm install nedb
 
 EXPOSE 80 443 4433
-
-# volumes
-VOLUME /opt/meshcentral/meshcentral-data
-VOLUME /opt/meshcentral/meshcentral-files
-VOLUME /opt/meshcentral/meshcentral-web
-VOLUME /opt/meshcentral/meshcentral-backups
 
 #Entry Point
 CMD ["bash", "/opt/meshcentral/startup.sh"]
