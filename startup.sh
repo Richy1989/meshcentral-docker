@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+run_mesh()
+{
+    su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${ARGS}" node
+}
+
 if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
     node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
 else
@@ -30,7 +36,7 @@ else
     sed -i "s/\"_sessionKey\": \"MyReallySecretPassword1\"/\"sessionKey\": \"$SESSION_KEY\"/" meshcentral-data/"${CONFIG_FILE}"
     if [ "$REVERSE_PROXY" != "false" ]; then
         sed -i "s/\"_certUrl\": \"my\.reverse\.proxy\"/\"certUrl\": \"https:\/\/$REVERSE_PROXY:$REVERSE_PROXY_TLS_PORT\"/" meshcentral-data/"${CONFIG_FILE}"
-        node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
+        run_mesh
         exit
     fi
     node meshcentral/meshcentral --configfile "${CONFIG_FILE}" --cert "$HOSTNAME" ${ARGS}

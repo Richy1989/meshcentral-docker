@@ -35,19 +35,19 @@ RUN if [ -z "$DISABLE_TRANSLATE" ]; then cd meshcentral/translate && node transl
 RUN rm -rf /opt/meshcentral/meshcentral/docker
 RUN rm -rf /opt/meshcentral/meshcentral/node_modules
 
-#FROM --platform=$TARGETPLATFORM alpine:3.19
-FROM node:latest
+FROM --platform=$TARGETPLATFORM alpine:3.19
+#FROM node:latest
 
-#RUN apk update \
-#    && apk add --no-cache --update tzdata nodejs npm bash python3 make gcc g++ \
-#    && rm -rf /var/cache/apk/*
-#RUN npm install -g npm@latest
+RUN apk update \
+    && apk add --no-cache --update tzdata nodejs npm bash python3 make gcc g++ \
+    && rm -rf /var/cache/apk/*
+RUN npm install -g npm@latest
 
 ARG UID=1000
 ARG GID=1000
 
-#RUN adduser -D -H -u "${UID}" -g "${GID}" node
-RUN usermod -u "${UID}" -g "${GID}" node
+RUN adduser -D -H -u "${UID}" -g "${GID}" node
+#RUN usermod -u "${UID}" -g "${GID}" node
 
 #Add non-root user, add installation directories and assign proper permissions
 RUN mkdir -p /opt/meshcentral/meshcentral 
@@ -59,7 +59,7 @@ COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
 RUN chown node:node -R /opt/meshcentral/
 
 #Switch to user node
-USER node
+#USER node
 
 # meshcentral installation
 WORKDIR /opt/meshcentral
@@ -89,7 +89,7 @@ ENV REVERSE_PROXY="false"
 ENV REVERSE_PROXY_TLS_PORT=""
 ENV ARGS=""
 
-# RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
+RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
 # Coppy needed files
 COPY --chown=node:node ./startup.sh ./startup.sh 
