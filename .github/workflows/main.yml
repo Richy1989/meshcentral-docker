@@ -2,8 +2,6 @@ name: Build Meshcentral Unraid Image
 
 on:
   push:
-  schedule:
-    - cron: "0 16 * * 6"
 
 env:
   APP_VERSION: 0
@@ -28,7 +26,7 @@ jobs:
         with:
           node-version: 20.x
       - run: echo "APP_VERSION=$(grep -o '"version":\s*"[^"]*"' ./mesh/package.json | cut -f4- -d\" | tr -d '"')" >> $GITHUB_ENV
-      - run: echo $APP_VERSION
+      - run: echo   
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -46,5 +44,5 @@ jobs:
             INCLUDE_MONGODBTOOLS=yes
           platforms: linux/amd64
           tags: |
-            richy1989/meshcentral:latest
-            richy1989/meshcentral:${{ env.APP_VERSION }}
+            richy1989/meshcentral-dev:latest
+            richy1989/meshcentral-dev:${{ env.APP_VERSION }}
