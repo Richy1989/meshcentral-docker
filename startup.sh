@@ -3,11 +3,18 @@
 
 run_mesh()
 {
-    su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${ARGS}" node
+    if [ $1 ]; then
+        su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${2}" node
+        exit
+    fi
+    su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" --cert "$HOSTNAME" ${2}" node
+    # su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${ARGS}" node
+    # su -c "$1" node
 }
 
 if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
-    node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
+    run_mesh true ${ARGS}
+    #node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
 else
     rm -f meshcentral-data/"${CONFIG_FILE}"
     cp config.json.template meshcentral-data/"${CONFIG_FILE}"
@@ -36,8 +43,9 @@ else
     sed -i "s/\"_sessionKey\": \"MyReallySecretPassword1\"/\"sessionKey\": \"$SESSION_KEY\"/" meshcentral-data/"${CONFIG_FILE}"
     if [ "$REVERSE_PROXY" != "false" ]; then
         sed -i "s/\"_certUrl\": \"my\.reverse\.proxy\"/\"certUrl\": \"https:\/\/$REVERSE_PROXY:$REVERSE_PROXY_TLS_PORT\"/" meshcentral-data/"${CONFIG_FILE}"
-        run_mesh
+        run_mesh true ${ARGS}
         exit
     fi
-    node meshcentral/meshcentral --configfile "${CONFIG_FILE}" --cert "$HOSTNAME" ${ARGS}
+    #node meshcentral/meshcentral --configfile "${CONFIG_FILE}" --cert "$HOSTNAME" ${ARGS}
+    run_mesh false ${ARGS}
 fi
