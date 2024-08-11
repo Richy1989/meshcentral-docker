@@ -103,6 +103,11 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 # install dependencies from package.json and nedb
 RUN cd meshcentral && npm install && npm install nedb
 
+RUN mkdir /opt/meshcentral/meshcentral-data \
+ && mkdir /opt/meshcentral/meshcentral-files \
+ && mkdir /opt/meshcentral/meshcentral-web \
+ && mkdir /opt/meshcentral/meshcentral-backups
+
 EXPOSE 80 443 4433
 
 # volumes
