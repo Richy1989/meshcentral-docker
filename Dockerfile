@@ -45,7 +45,7 @@ ARG PREINSTALL_LIBS="false"
 
 #Add non-root user, add installation directories and assign proper permissions
 #add a node user with UID PID
-RUN adduser -D -u "${UID}" -G users node
+RUN adduser -D -S -u "${UID}" -G users node
 #RUN usermod -u "${UID}" -g "${GID}" node
 
 RUN apk update \
