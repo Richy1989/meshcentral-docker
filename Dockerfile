@@ -84,7 +84,7 @@ ENV REVERSE_PROXY_TLS_PORT=""
 ENV ARGS=""
 
 # copy files from builder-image
-COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
+COPY --from=builder --chown=$UID:$GID /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
 
 # meshcentral installation
 WORKDIR /opt/meshcentral
