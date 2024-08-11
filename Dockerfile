@@ -55,7 +55,7 @@ RUN npm install -g npm@latest
 
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
-RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID -R /opt/meshcentral && chmod -R 764 /opt/meshcentral
+RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID -R /opt/meshcentral
     
 # copy files from builder-image
 COPY --from=builder --chown=$UID:$GID /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
@@ -85,15 +85,12 @@ ENV ARGS=""
 # meshcentral installation
 WORKDIR /opt/meshcentral
 
-# Set GID and UID to the once set in Build Arguments.
-#RUN chown node:users -R /opt/meshcentral \
-#    && chmod -R 775 /opt/meshcentral
-
 # Coppy needed files77
 COPY --chown=$UID:$GID ./startup.sh ./startup.sh 
 COPY --chown=$UID:$GID ./config.json.template ./config.json.template
 
-RUN chown -R $UID:$GID /opt/meshcentral && chmod -R 764 /opt/meshcentral
+# Coppy meshcentral
+RUN chown -R $UID:$GID /opt/meshcentral
 
 #Switch to user node
 USER node
