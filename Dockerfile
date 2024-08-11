@@ -42,8 +42,7 @@ ARG UID=1000
 ARG GID=1000
 
 #add a node user with UID PID
-RUN export gname=${cat /etc/group | grep ${UID} | cut -d':' -f1}
-RUN adduser -D -u "${UID}" -G "${gname}" node
+RUN adduser -D -u "${UID}" -G "${cat /etc/group | grep ${UID} | cut -d':' -f1}" node
 #RUN usermod -u "${UID}" -g "${GID}" node
 
 RUN apk update \
