@@ -41,6 +41,7 @@ FROM --platform=$TARGETPLATFORM alpine:3.19
 ARG UID=1000
 ARG GID=1000
 
+#Add non-root user, add installation directories and assign proper permissions
 #add a node user with UID PID
 RUN adduser -D -u "${UID}" -G users node
 #RUN usermod -u "${UID}" -g "${GID}" node
@@ -50,7 +51,6 @@ RUN apk update \
     && rm -rf /var/cache/apk/*
 RUN npm install -g npm@latest
 
-#Add non-root user, add installation directories and assign proper permissions
 RUN mkdir -p /opt/meshcentral/meshcentral 
 
 # copy files from builder-image
@@ -86,6 +86,13 @@ ENV ARGS=""
 
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
+# Set GID and UID to the once set in Build Arguments.
+RUN chown node:users -R /opt/meshcentral \
+    && chmod -R 775 /opt/meshcentral
+
+#Switch to user node
+USER node
+
 # Coppy needed files
 COPY --chown=node:users ./startup.sh ./startup.sh 
 COPY --chown=node:users ./config.json.template /opt/meshcentral/config.json.template
@@ -96,13 +103,6 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 
 # install dependencies from package.json and nedb
 RUN cd meshcentral && npm install && npm install nedb
-
-# Set GID and UID to the once set in Build Arguments.
-RUN chown node:users -R /opt/meshcentral \
-    && chmod -R 775 /opt/meshcentral
-
-#Switch to user node
-USER node
 
 EXPOSE 80 443 4433
 
