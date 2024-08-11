@@ -55,11 +55,12 @@ RUN npm install -g npm@latest
 
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
-RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/meshcentral \
-    && chmod -R 775 /opt/meshcentral
+RUN mkdir -p /opt/meshcentral/meshcentral
+    
+# copy files from builder-image
+COPY --from=builder --chown=$UID:$GID /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
 
-#Switch to user node
-USER node
+RUN chown -R $UID:$GID /opt/meshcentral && chmod -R 775 /opt/meshcentral
 
 # environment variables
 ENV NODE_ENV="production"
@@ -83,9 +84,6 @@ ENV REVERSE_PROXY="false"
 ENV REVERSE_PROXY_TLS_PORT=""
 ENV ARGS=""
 
-# copy files from builder-image
-COPY --from=builder --chown=$UID:$GID /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
-
 # meshcentral installation
 WORKDIR /opt/meshcentral
 
@@ -93,7 +91,7 @@ WORKDIR /opt/meshcentral
 #RUN chown node:users -R /opt/meshcentral \
 #    && chmod -R 775 /opt/meshcentral
 
-# Coppy needed files
+# Coppy needed files77
 COPY --chown=$UID:$GID ./startup.sh ./startup.sh 
 COPY --chown=$UID:$GID ./config.json.template ./config.json.template
 
@@ -103,6 +101,9 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 
 # install dependencies from package.json and nedb
 RUN cd meshcentral && npm install && npm install nedb
+
+#Switch to user node
+USER node
 
 EXPOSE 80 443 4433
 
