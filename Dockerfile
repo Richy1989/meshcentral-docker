@@ -55,7 +55,8 @@ RUN npm install -g npm@latest
 
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
-RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/meshcentral
+RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/meshcentral \
+    && chmod -R 775 /opt/meshcentral
 
 #Switch to user node
 USER node
@@ -93,8 +94,8 @@ WORKDIR /opt/meshcentral
 #    && chmod -R 775 /opt/meshcentral
 
 # Coppy needed files
-COPY --chown=$UID:$GID ./startup.sh /startup.sh 
-COPY --chown=$UID:$GID ./config.json.template /config.json.template
+COPY --chown=$UID:$GID ./startup.sh ./startup.sh 
+COPY --chown=$UID:$GID ./config.json.template ./config.json.template
 
 # NOTE: ALL MODULES MUST HAVE A VERSION NUMBER AND THE VERSION MUST MATCH THAT USED IN meshcentral.js mainStart()
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then cd meshcentral && npm install mongodb@4.13.0 saslprep@1.0.3; fi
@@ -103,19 +104,14 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 # install dependencies from package.json and nedb
 RUN cd meshcentral && npm install && npm install nedb
 
-RUN mkdir /opt/meshcentral/meshcentral-data \
- && mkdir /opt/meshcentral/meshcentral-files \
- && mkdir /opt/meshcentral/meshcentral-web \
- && mkdir /opt/meshcentral/meshcentral-backups
-
 EXPOSE 80 443 4433
 
 # volumes
-VOLUME /opt/meshcentral
+#VOLUME /opt/meshcentral
 VOLUME /opt/meshcentral/meshcentral-data
 VOLUME /opt/meshcentral/meshcentral-files
 VOLUME /opt/meshcentral/meshcentral-web
 VOLUME /opt/meshcentral/meshcentral-backups
 
 #Entry Point
-CMD ["bash", "/startup.sh"]
+CMD ["bash", "/opt/meshcentral/startup.sh"]
