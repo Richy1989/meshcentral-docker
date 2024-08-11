@@ -94,7 +94,7 @@ WORKDIR /opt/meshcentral
 
 # Coppy needed files
 COPY --chown=$UID:$GID ./startup.sh /startup.sh 
-COPY --chown=$UID:$GID ./config.json.template /opt/meshcentral/config.json.template
+COPY --chown=$UID:$GID ./config.json.template /config.json.template
 
 # NOTE: ALL MODULES MUST HAVE A VERSION NUMBER AND THE VERSION MUST MATCH THAT USED IN meshcentral.js mainStart()
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then cd meshcentral && npm install mongodb@4.13.0 saslprep@1.0.3; fi
@@ -113,4 +113,4 @@ VOLUME /opt/meshcentral
 #VOLUME /opt/meshcentral/meshcentral-backups
 
 #Entry Point
-CMD ["bash", "/startup.sh"]
+CMD ["bash", "/opt/meshcentral/startup.sh"]
