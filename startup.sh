@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 run_mesh() {
     if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
@@ -39,5 +39,5 @@ run_mesh() {
     fi
 }
 
-chmod 99:100 -R /opt/meshcentral
-su -c "run_mesh" node
+chown 99:100 -R /opt/meshcentral
+su -c "sh -c run_mesh"
