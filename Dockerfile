@@ -93,7 +93,7 @@ WORKDIR /opt/meshcentral
 #    && chmod -R 775 /opt/meshcentral
 
 # Coppy needed files
-COPY --chown=$UID:$GID ./startup.sh ./startup.sh 
+COPY --chown=$UID:$GID ./startup.sh /startup.sh 
 COPY --chown=$UID:$GID ./config.json.template /opt/meshcentral/config.json.template
 
 # NOTE: ALL MODULES MUST HAVE A VERSION NUMBER AND THE VERSION MUST MATCH THAT USED IN meshcentral.js mainStart()
@@ -113,4 +113,4 @@ VOLUME /opt/meshcentral
 #VOLUME /opt/meshcentral/meshcentral-backups
 
 #Entry Point
-CMD ["bash", "/opt/meshcentral/startup.sh"]
+CMD ["bash", "/startup.sh"]
