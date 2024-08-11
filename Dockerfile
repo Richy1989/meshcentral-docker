@@ -85,7 +85,6 @@ ENV ARGS=""
 
 # copy files from builder-image
 COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
-RUN chown $UID:$GID -R /opt/meshcentral/
 
 # meshcentral installation
 WORKDIR /opt/meshcentral
