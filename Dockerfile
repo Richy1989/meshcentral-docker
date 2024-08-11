@@ -101,7 +101,7 @@ RUN cd meshcentral && npm install && npm install nedb
 RUN chown ${UID}:${GID} -R /opt/meshcentral/
 
 #Switch to user node
-#USER node
+USER node
 
 EXPOSE 80 443 4433
 
