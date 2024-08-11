@@ -1,5 +1,5 @@
 #!/bin/bash
-#umask 013
+umask 013
 chmod 764 /opt/meshcentral/meshcentral-data -R
 chmod 764 /opt/meshcentral/meshcentral-files -R
 chmod 764 /opt/meshcentral/meshcentral-web -R
