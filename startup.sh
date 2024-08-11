@@ -1,5 +1,5 @@
 #!/bin/bash
-##umask 013
+#umask 013
 chmod 764 /opt/meshcentral/meshcentral-data -R
 chmod 764 /opt/meshcentral/meshcentral-files -R
 chmod 764 /opt/meshcentral/meshcentral-web -R
@@ -9,7 +9,10 @@ if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false
     node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
 else
     rm -f meshcentral-data/"${CONFIG_FILE}"
+    
     cp config.json.template meshcentral-data/"${CONFIG_FILE}"
+    
+    chmod 764 /opt/meshcentral/meshcentral-data -R
     
     if [ -n "$USE_MONGODB" ] && [ "$USE_MONGODB" == "true" ]; then
         if [ -z "$MONGO_URL" ]; then
