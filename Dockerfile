@@ -36,7 +36,6 @@ RUN rm -rf /opt/meshcentral/meshcentral/docker
 RUN rm -rf /opt/meshcentral/meshcentral/node_modules
 
 FROM --platform=$TARGETPLATFORM alpine:3.19
-#FROM node:latest
 
 ARG UID=1000
 ARG GID=1000
@@ -44,9 +43,7 @@ ARG INCLUDE_MONGODBTOOLS=""
 ARG PREINSTALL_LIBS="false"
 
 #Add non-root user, add installation directories and assign proper permissions
-#add a node user with UID PID
 RUN adduser -D -S -u "${UID}" -G users node
-#RUN usermod -u "${UID}" -g "${GID}" node
 
 RUN apk update \
     && apk add --no-cache --update tzdata nodejs npm bash python3 make gcc g++ \
