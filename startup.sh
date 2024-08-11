@@ -1,6 +1,9 @@
 #!/bin/bash
 
-chmod 764 /opt/meshcentral/meshcentral-data /opt/meshcentral/meshcentral-files /opt/meshcentral/meshcentral-web /opt/meshcentral/meshcentral-backups
+chmod 764 /opt/meshcentral/meshcentral-data -R
+chmod 764 /opt/meshcentral/meshcentral-files -R
+chmod 764 /opt/meshcentral/meshcentral-web -R
+chmod 764 /opt/meshcentral/meshcentral-backups -R
 
 if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
     node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
