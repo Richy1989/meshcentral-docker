@@ -42,7 +42,7 @@ ARG UID=1000
 ARG GID=1000
 
 #add a node user with UID PID
-RUN adduser -D -u "${UID}" -g "${GID}" node
+RUN addgroup "${GID}" && adduser -D -u "${UID}" -G "${GID}" node
 #RUN usermod -u "${UID}" -g "${GID}" node
 
 RUN apk update \
@@ -100,6 +100,7 @@ RUN cd meshcentral && npm install && npm install nedb
 # Set GID and UID to the once set in Build Arguments.
 RUN chown node:node -R /opt/meshcentral \
     && chmod -R 775 /opt/meshcentral
+
 #Switch to user node
 USER node
 
