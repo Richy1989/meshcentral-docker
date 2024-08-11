@@ -44,5 +44,5 @@ jobs:
             INCLUDE_MONGODBTOOLS=yes
           platforms: linux/amd64
           tags: |
-            richy1989/meshcentral-dev:latest
-            richy1989/meshcentral-dev:${{ env.APP_VERSION }}
+            richy1989/meshcentral:latest
+            richy1989/meshcentral:${{ env.APP_VERSION }}
