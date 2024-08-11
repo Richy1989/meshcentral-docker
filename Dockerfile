@@ -60,8 +60,6 @@ RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID -R /opt/meshcent
 # copy files from builder-image
 COPY --from=builder --chown=$UID:$GID /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
 
-RUN chown -R $UID:$GID /opt/meshcentral && chmod -R 764 /opt/meshcentral
-
 # environment variables
 ENV NODE_ENV="production"
 ENV CONFIG_FILE="config.json"
@@ -94,6 +92,8 @@ WORKDIR /opt/meshcentral
 # Coppy needed files77
 COPY --chown=$UID:$GID ./startup.sh ./startup.sh 
 COPY --chown=$UID:$GID ./config.json.template ./config.json.template
+
+RUN chown -R $UID:$GID /opt/meshcentral && chmod -R 764 /opt/meshcentral
 
 #Switch to user node
 USER node
