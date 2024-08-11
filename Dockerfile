@@ -113,4 +113,4 @@ VOLUME /opt/meshcentral
 #VOLUME /opt/meshcentral/meshcentral-backups
 
 #Entry Point
-CMD ["bash", "/opt/meshcentral/startup.sh"]
+CMD ["bash", "/startup.sh"]
