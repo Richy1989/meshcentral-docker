@@ -40,6 +40,8 @@ FROM --platform=$TARGETPLATFORM alpine:3.19
 
 ARG UID=1000
 ARG GID=1000
+ARG INCLUDE_MONGODBTOOLS=""
+ARG PREINSTALL_LIBS="false"
 
 #Add non-root user, add installation directories and assign proper permissions
 #add a node user with UID PID
@@ -51,15 +53,12 @@ RUN apk update \
     && rm -rf /var/cache/apk/*
 RUN npm install -g npm@latest
 
-RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/
-
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
+
+RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/meshcentral
 
 #Switch to user node
 USER node
-
-ARG INCLUDE_MONGODBTOOLS=""
-ARG PREINSTALL_LIBS="false"
 
 # environment variables
 ENV NODE_ENV="production"
