@@ -42,7 +42,7 @@ ARG UID=1000
 ARG GID=1000
 
 #add a node user with UID PID
-RUN addgroup "${GID}" && adduser -D -u "${UID}" -G "${GID}" node
+RUN adduser -D -u "${UID}" -G "${GID}" node
 #RUN usermod -u "${UID}" -g "${GID}" node
 
 RUN apk update \
@@ -87,8 +87,8 @@ ENV ARGS=""
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
 # Coppy needed files
-COPY --chown=node:node ./startup.sh ./startup.sh 
-COPY --chown=node:node ./config.json.template /opt/meshcentral/config.json.template
+COPY --chown=node:users ./startup.sh ./startup.sh 
+COPY --chown=node:users ./config.json.template /opt/meshcentral/config.json.template
 
 # NOTE: ALL MODULES MUST HAVE A VERSION NUMBER AND THE VERSION MUST MATCH THAT USED IN meshcentral.js mainStart()
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then cd meshcentral && npm install mongodb@4.13.0 saslprep@1.0.3; fi
@@ -98,7 +98,7 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 RUN cd meshcentral && npm install && npm install nedb
 
 # Set GID and UID to the once set in Build Arguments.
-RUN chown node:node -R /opt/meshcentral \
+RUN chown node:users -R /opt/meshcentral \
     && chmod -R 775 /opt/meshcentral
 
 #Switch to user node
