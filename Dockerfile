@@ -98,8 +98,8 @@ RUN if ! [ -z "$PREINSTALL_LIBS" ] && [ "$PREINSTALL_LIBS" == "true" ]; then cd 
 RUN cd meshcentral && npm install && npm install nedb
 
 # Set GID and UID to the once set in Build Arguments.
-RUN chown node:node -R /opt/meshcentral/
-
+RUN chown node:node -R /opt/meshcentral \
+    && chmod -R 775 /opt/meshcentral
 #Switch to user node
 USER node
 
