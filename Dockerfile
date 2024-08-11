@@ -51,7 +51,9 @@ RUN apk update \
     && rm -rf /var/cache/apk/*
 RUN npm install -g npm@latest
 
-RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/meshcentral/meshcentral/
+RUN mkdir -p /opt/meshcentral/meshcentral && chown -R $UID:$GID /opt/
+
+RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
 #Switch to user node
 USER node
@@ -80,8 +82,6 @@ ENV SESSION_KEY=""
 ENV REVERSE_PROXY="false"
 ENV REVERSE_PROXY_TLS_PORT=""
 ENV ARGS=""
-
-RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
 # copy files from builder-image
 COPY --from=builder /opt/meshcentral/meshcentral /opt/meshcentral/meshcentral
