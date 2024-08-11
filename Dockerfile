@@ -106,10 +106,11 @@ RUN cd meshcentral && npm install && npm install nedb
 EXPOSE 80 443 4433
 
 # volumes
-VOLUME /opt/meshcentral/meshcentral-data
-VOLUME /opt/meshcentral/meshcentral-files
-VOLUME /opt/meshcentral/meshcentral-web
-VOLUME /opt/meshcentral/meshcentral-backups
+VOLUME /opt/meshcentral
+#VOLUME /opt/meshcentral/meshcentral-data
+#VOLUME /opt/meshcentral/meshcentral-files
+#VOLUME /opt/meshcentral/meshcentral-web
+#VOLUME /opt/meshcentral/meshcentral-backups
 
 #Entry Point
 CMD ["bash", "/opt/meshcentral/startup.sh"]
