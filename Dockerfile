@@ -86,8 +86,6 @@ ENV ARGS=""
 
 RUN if ! [ -z "$INCLUDE_MONGODBTOOLS" ]; then apk add --no-cache mongodb-tools; fi
 
-
-
 # Coppy needed files
 COPY --chown=node:node ./startup.sh ./startup.sh 
 COPY --chown=node:node ./config.json.template /opt/meshcentral/config.json.template
@@ -103,7 +101,7 @@ RUN cd meshcentral && npm install && npm install nedb
 RUN chown ${UID}:${GID} -R /opt/meshcentral/
 
 #Switch to user node
-USER node
+#USER node
 
 EXPOSE 80 443 4433
 
