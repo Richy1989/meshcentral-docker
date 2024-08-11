@@ -3,7 +3,7 @@
 run_mesh() {
     if [ -f "meshcentral-data/${CONFIG_FILE}" ] && [ "$FORCE_CREATE_CONFIG" = "false" ]; then
 
-        node meshcentral/meshcentral --configfile "${CONFIG_FILE}" ${ARGS}
+        su -c "node meshcentral/meshcentral --configfile \"${CONFIG_FILE}\" ${ARGS}"
     else
         rm -f meshcentral-data/"${CONFIG_FILE}"
         cp config.json.template meshcentral-data/"${CONFIG_FILE}"
@@ -40,4 +40,4 @@ run_mesh() {
 }
 
 chown 99:100 -R /opt/meshcentral
-su -c "sh -c run_mesh"
+run_mesh
